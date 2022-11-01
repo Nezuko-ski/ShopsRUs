@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ShopsRUs</name>
+    </assembly>
+    <members>
+        <member name="T:ShopsRUs.Controllers.AuthController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ShopsRUs.Controllers.AuthController.#ctor(ShopsRUs.Core.Interfaces.IAuthService)">
+            <summary>
+            
+            </summary>
+            <param name="service"></param>
+        </member>
+        <member name="M:ShopsRUs.Controllers.AuthController.Register(ShopsRUs.Core.DTOs.CreateCustomerDTO)">
+            <summary>
+            Create a new customer
+            </summary>
+            <param name="dTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShopsRUs.Controllers.AuthController.GetAllCustomers">
+            <summary>
+            Get All Customers
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShopsRUs.Controllers.AuthController.GetCustomerById(System.String)">
+            <summary>
+            Get Customer By Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShopsRUs.Controllers.AuthController.GetCustomerByName(System.String)">
+            <summary>
+            Get Customer By Name
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ShopsRUs.Controllers.DiscountController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ShopsRUs.Controllers.DiscountController.#ctor(ShopsRUs.Core.Interfaces.IDiscountService)">
+            <summary>
+            
+            </summary>
+            <param name="service"></param>
+        </member>
+        <member name="M:ShopsRUs.Controllers.DiscountController.AddDiscountType(ShopsRUs.Core.DTOs.DiscountResponseDTO)">
+            <summary>
+            Adds new Discount type
+            </summary>
+            <param name="dTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShopsRUs.Controllers.DiscountController.GetAllDiscounts">
+            <summary>
+            Gets a list of all discounts
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ShopsRUs.Controllers.DiscountController.GetDiscountType(System.String)">
+            <summary>
+            Gets specific discount percentage by type
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ShopsRUs.Controllers.InvoiceController.GetInvoiceAmount(ShopsRUs.Core.DTOs.InvoiceRequestDTO)">
+            <summary>
+            Gets total invoice amount given a bill
+            </summary>
+            <param name="dTO"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
