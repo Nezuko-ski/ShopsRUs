@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShopsRUs.Core.DTOs;
 using ShopsRUs.Core.Interfaces;
@@ -37,6 +38,7 @@ namespace ShopsRUs.Controllers
         /// Get All Customers
         /// </summary>
         /// <returns></returns>
+        [EnableCors("AllowOrigin")]
         [HttpGet]
         public async Task<IActionResult> GetAllCustomers()
         {

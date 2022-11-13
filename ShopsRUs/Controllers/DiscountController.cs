@@ -104,7 +104,7 @@ namespace ShopsRUs.Controllers
             try
             {
                 var discount = await _service.GetSpecificDiscount(Id);
-                if(discount != null)
+                if (discount != null)
                 {
                     var result = new DiscountResponseDTO();
                     result.Name = discount.Name;
@@ -127,6 +127,6 @@ namespace ShopsRUs.Controllers
                 throw;
             }
         }
-        
+
     }
 }

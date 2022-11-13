@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  shopsrusdb:
+    container_name: shopsrusdb
+    environment:
+        ACCEPT_EULA: "Y"
+        MSSQL_SA_PASSWORD: "Pass@word1"
+    restart: always
+    ports:
+      - "1433:1433"
+      
+  shopsrus:
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=https://+:443;http://+:80
+        - ASPNETCORE_HTTPS_PORT=5001
+        - "ConnectionStrings:DefaultConnection=Server=shopsrusdb;Database=ShopsRUs;User Id=sa;Password=Pass@word1"
+    ports:
+        - "5000:80"
+        - "5001:443"
+    depends_on:
+        - shopsrusdb
+    volumes:
+        - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+        - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  shopsrusdb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+  shopsrus:
+    image: ${DOCKER_REGISTRY-}shopsrus
+    build:
+      context: .
+      dockerfile: ShopsRUs/Dockerfile

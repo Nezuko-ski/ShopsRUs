@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShopsRUs.Core.Interfaces;
@@ -27,6 +28,11 @@ builder.Services.AddDbContext<ShopsRUsDbContext>(options => options.UseSqlServer
     .GetConnectionString("DefaultConnection")));
 builder.Services.AddIdentity<Customer, IdentityRole>().AddEntityFrameworkStores<ShopsRUsDbContext>();
 
+builder.Services.AddCors(policyBuilder =>
+    policyBuilder.AddDefaultPolicy(policy =>
+        policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
+);
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
@@ -37,7 +43,12 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 //builder.Services.AddAutoMapper(typeof(ShopsRUsProfile));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenAnyIP(5000); // to listen for incoming http connection on port 5000
+//    options.ListenAnyIP(5001, configure => configure.UseHttps()); // to listen for incoming https connection on port 5001
+//    // http://localhost:5000/swagger/index.html
+//});
 
 var app = builder.Build();
 
@@ -49,6 +60,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.UseAuthentication();
 app.UseAuthorization();
