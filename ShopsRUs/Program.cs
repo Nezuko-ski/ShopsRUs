@@ -1,12 +1,17 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using ShopsRUs.Core.Interfaces;
 using ShopsRUs.Core.Services;
 using ShopsRUs.Core.Utilities;
 using ShopsRUs.Domain.Models;
 using ShopsRUs.Infrastructure;
 using ShopsRUs.Infrastructure.Repository;
+using System;
+using System.IO;
+using System.Net;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +38,25 @@ builder.Services.AddCors(policyBuilder =>
         policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
 );
 
+builder.WebHost.UseKestrel(options =>
+{
+    var httpsPort = config.GetValue("ASPNETCORE_HTTPS_PORT", 443);
+    var certPassword = config.GetValue<string>("Kestrel:Certificates:Development:Password") ?? 
+        Environment.GetEnvironmentVariable("ASPNETCORE_Kestrel__Certificates__Development__Password");;
+    var certPath = config.GetValue<string>("Kestrel:Certificates:Development:Path") ??
+        Environment.GetEnvironmentVariable("ASPNETCORE_Kestrel__Certificates__Development__Path");
+
+    Console.WriteLine(httpsPort);
+    Console.WriteLine(certPath);
+    Console.WriteLine(certPassword);
+
+    options.Listen(IPAddress.Any, httpsPort, listenOptions =>
+    {
+        Console.WriteLine(listenOptions);
+        listenOptions.UseHttps(certPath, certPassword);
+    });
+});
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IDiscountService, DiscountService>();
@@ -53,14 +77,14 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
+// }
+app.UseRouting();
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

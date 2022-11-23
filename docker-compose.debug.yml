@@ -3,9 +3,6 @@
 version: '3.4'
 
 services:
-  shopsrusdb:
-    image: mcr.microsoft.com/mssql/server:2017-latest
-
   shopsrus:
     image: shopsrus
     build:
@@ -13,7 +10,7 @@ services:
       dockerfile: ShopsRUs/Dockerfile
     ports:
       - 80:80
-      - 443:443
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
     volumes:
-      - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
-      - ${HOME}/.aspnet/https:/https/:ro
+      - ~/.vsdbg:/remote_debugger:rw

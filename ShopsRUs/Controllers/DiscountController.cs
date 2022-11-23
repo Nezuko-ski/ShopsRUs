@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using ShopsRUs.Core.DTOs;
 using ShopsRUs.Core.Interfaces;
 using ShopsRUs.Domain.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace ShopsRUs.Controllers
 {
