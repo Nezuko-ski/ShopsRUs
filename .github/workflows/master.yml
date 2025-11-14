@@ -10,16 +10,20 @@ on:
     - master
     
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  test:
+    name: dotnet ${{ matrix.dotnet }} . ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        dotnet: ['8.0.x', '9.0.x']
 
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore 
       working-directory: ./ShopsRUs
